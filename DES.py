@@ -196,30 +196,37 @@ def inverseFunc(text):
 
 def crypto(p):
     p1 = IP(p)
-    K = '0001001100110100010101110111100110011011101111001101111111110001'
+    K = '0000000100100011010001010110011110001001101010111100110111101111'
     lst = create16Key48(K)
+    print("K1 : " + lst[0])
     L = p1[:32]
     R = p1[32:]
-    for i in range(16):
+    print(L)
+    print(R)
+    for i in range(1):
         E_R = eBox(R)
+        print('eBox : '+E_R)
         X1_R = xorFunc(lst[i],E_R)
-        # print("here : "+X1_R)
+        print("xor1 : "+X1_R)
         S_R = sBox(X1_R)
-        # print("sBox : " + S_R)
+        print("sBox : " + S_R)
         P_R = pBox(S_R)
+        print("pBox : "+ P_R)
         X2_R = xorFunc(L,P_R)
+        print("Xor2 : " + X2_R)
         L = R
         R = X2_R
-        # print("ca : " + (L + R))
+        print("ca : " + (R + L))
     final = R + L
-    _final = inverseFunc(final)
+    # _final = inverseFunc(final)
     # print(_final)
-    __final = hex(int(_final,2))[2:]
+    __final = hex(int(final,2))[2:]
+    print(__final)
     return __final
 
 
-# K = ' 0001001100110100010101110111100110011011101111001101111111110001'
-# x = readKey64(K)
+# K = '0000000100100011010001010110011110001001101010111100110111101111'
+# x = create16Key48(K)
 # print(x)
 # print(len(x))
 
@@ -238,4 +245,4 @@ def crypto(p):
 #     print(i)
 
 c = crypto('0000000100100011010001010110011110001001101010111100110111101111')
-print(c)
+# print(c)
